@@ -6,7 +6,7 @@
   <link href="https://www.fomal.cc/atom.xml" rel="self"/>
   
   <link href="https://www.fomal.cc/"/>
-  <updated>2023-11-07T00:14:06.231Z</updated>
+  <updated>2023-11-14T17:49:33.520Z</updated>
   <id>https://www.fomal.cc/</id>
   
   <author>
@@ -15,6 +15,36 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>哈希</title>
+    <link href="https://www.fomal.cc/posts/2e3b1176.html"/>
+    <id>https://www.fomal.cc/posts/2e3b1176.html</id>
+    <published>2023-11-13T14:38:37.507Z</published>
+    <updated>2023-11-14T17:49:33.520Z</updated>
+    
+    <content type="html"><![CDATA[<hr><h1>1. 概述</h1><p>哈希地址：是一个逻辑地址&lt;–哈希函数</p><p>哈希取值方法：</p><ol><li>平方取中法</li><li>取余法</li><li>直接定址法</li><li>折叠法</li></ol><p>哈希冲突：当两个数据的取余值相同时会指向同一个储存地址。</p><p>哈希冲突解决方案 ：</p><ol><li>开放地址法</li><li>邻接表法</li></ol><hr><h1>2. 哈希函数</h1><h2 id="取余法-主要常用">取余法(主要常用)</h2><p>取余法是将数值进行以数组最长长度进行取余从而确定数值存储位置的方法。如下：</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> num[<span class="number">6</span>];<span class="comment">//定义6个元素用来存储6个数值</span></span><br><span class="line"><span class="type">int</span> nums[<span class="number">6</span>]=&#123;<span class="number">7</span>,<span class="number">9</span>,<span class="number">10</span>,<span class="number">8</span>,<span class="number">11</span>,<span class="number">12</span>&#125;;</span><br><span class="line"><span class="keyword">while</span>(i&lt;<span class="number">6</span>)&#123;</span><br><span class="line">    <span class="type">int</span> m=nums[i]/<span class="number">6</span>;</span><br><span class="line">    num[m]=nums[i];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>上述代码就是表示当余数为0-5时，那么对应的数值就是放入下标为0-5的数组中进行存储。</p><h2 id="直接定址法">直接定址法</h2><p>直接定址法简单粗暴，缺点是耗费空间。如下：</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> nums[]=&#123;<span class="number">22</span>,<span class="number">35</span>,<span class="number">67</span>,<span class="number">56</span>&#125;;</span><br><span class="line">num[<span class="number">100</span>];</span><br><span class="line"><span class="type">int</span> i=<span class="number">0</span>;</span><br><span class="line"><span class="keyword">while</span>(i&lt;=<span class="number">4</span>)&#123;</span><br><span class="line">    num[nums[i]]=nums[i];</span><br><span class="line">    i++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>上述代码就是将数值分配到与之相同的数组下标，那么我们数组开辟的空间时以所有数字中最大的为基准开辟的，故及其浪费时间；</p><hr><h1>3. 哈希冲突及其解决</h1><p>哈希冲突是当有两个相同的值的时候会占据相同位置。那么我们可以用<strong>开放地址法</strong>解决</p><p>示例：</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//回到上面取余法的方法</span></span><br><span class="line"><span class="type">int</span> num[<span class="number">7</span>];<span class="comment">//定义6个元素用来存储6个数值</span></span><br><span class="line"><span class="type">int</span> nums[<span class="number">7</span>]=&#123;<span class="number">7</span>,<span class="number">9</span>,<span class="number">10</span>,<span class="number">8</span>,<span class="number">11</span>,<span class="number">12</span>，<span class="number">15</span>&#125;;</span><br><span class="line"><span class="type">int</span> i;</span><br><span class="line"><span class="keyword">while</span>(i&lt;<span class="number">7</span>)&#123;</span><br><span class="line">    <span class="type">int</span> m=nums[i]/<span class="number">6</span>;</span><br><span class="line">    <span class="type">int</span> c_m=m;</span><br><span class="line">    <span class="keyword">do</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(num[m]==<span class="literal">NULL</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">        c_m=(c_m+<span class="number">1</span>)&amp;<span class="number">6</span>;</span><br><span class="line">    <span class="keyword">while</span>(c_m!=m);</span><br><span class="line">    num[m]=nums[i];</span><br><span class="line">    i++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>在上述过程中8和15发生冲突，那么我们判断当num[1]不为空时将会依次往下找空空间，知道有空位置就将其放入，就可以顺利将所有的元素放入。</p><hr><h1>4. 资料参考</h1><p>【【一听就懂】算法详解：哈希算法！超详细算法思想讲解，理论+代码实践，带你零基础掌握编程核心算法！】<a href="https://www.bilibili.com/video/BV1aB4y1m7av?vd_source=602097138258a0057a732e44579de1ed">https://www.bilibili.com/video/BV1aB4y1m7av?vd_source=602097138258a0057a732e44579de1ed</a></p><p>【数据结构与算法基础（青岛大学-王卓）】<a href="https://www.bilibili.com/video/BV1nJ411V7bd?p=22&amp;vd_source=602097138258a0057a732e44579de1ed">https://www.bilibili.com/video/BV1nJ411V7bd?p=22&amp;vd_source=602097138258a0057a732e44579de1ed</a></p><p>【【纯干货】5分钟!!!让你学会c/c++中结构体struct的用法！】<a href="https://www.bilibili.com/video/BV1vF411n7fe?vd_source=602097138258a0057a732e44579de1ed">https://www.bilibili.com/video/BV1vF411n7fe?vd_source=602097138258a0057a732e44579de1ed</a></p><p>【哈希究竟代表什么？哈希表和哈希函数的核心原理】<a href="https://www.bilibili.com/video/BV1SZ4y1z7wT?vd_source=602097138258a0057a732e44579de1ed">https://www.bilibili.com/video/BV1SZ4y1z7wT?vd_source=602097138258a0057a732e44579de1ed</a></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;hr&gt;
+&lt;h1&gt;1. 概述&lt;/h1&gt;
+&lt;p&gt;哈希地址：是一个逻辑地址&amp;lt;–哈希函数&lt;/p&gt;
+&lt;p&gt;哈希取值方法：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;平方取中法&lt;/li&gt;
+&lt;li&gt;取余法&lt;/li&gt;
+&lt;li&gt;直接定址法&lt;/li&gt;
+&lt;li&gt;折叠法&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;哈希冲突：当</summary>
+      
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>条件判断句和循环语句</title>
