@@ -6,7 +6,7 @@
   <link href="https://www.fomal.cc/atom.xml" rel="self"/>
   
   <link href="https://www.fomal.cc/"/>
-  <updated>2024-09-15T07:56:16.591Z</updated>
+  <updated>2024-09-15T09:05:15.477Z</updated>
   <id>https://www.fomal.cc/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>c++中的构造函数和析构函数</title>
+    <link href="https://www.fomal.cc/posts/42a67327.html"/>
+    <id>https://www.fomal.cc/posts/42a67327.html</id>
+    <published>2024-09-15T07:04:21.535Z</published>
+    <updated>2024-09-15T09:05:15.477Z</updated>
+    
+    <content type="html"><![CDATA[<hr><h1>构造函数和析构函数</h1><h2 id="介绍">介绍</h2><blockquote><p>在类中我们经常需要在程序开始时对程序进行初始化，而在程序结束时我们经常需要内存的清理，这将关系到我们程序的安全问题</p><p>在对象没有进行初始化时我们无法确认他的具体数据和状态，使用时也是极其危险的，而在使用完对象后没有进行及时清理也会导致留下极大的安全隐患</p></blockquote><p>而c++在程序中就内置了构造函数和析构函数来帮我们处理这个”准备工作“以及程序使用后的”烂摊子“，他们可以在程序运行时初始化对象，并且在程序运行完后进行清理。</p><p><strong>在c++中构造函数和析构函数是编译器的强制要求，如果我们没有提供独影的函数，那么编译器会自动提供的构造函数和析构函数并且是空实现</strong></p><h3 id="构造函数">构造函数</h3><hr><p>格式语法如下：</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">类名()&#123;&#125;</span><br></pre></td></tr></table></figure><p><strong>注意</strong>：</p><ol><li>构造函数没有返回值也不需要写数值返回类型</li><li>构造函数有参数，也可以与普通函数一样<strong>可以发生重载</strong></li><li>程序运行时会自动调用构造函数且只调用一次，不需要手动指定。</li></ol><ul><li>作用：主要用于创建对象时为对象的队员属性赋值，构造函数由编译器自动调用</li></ul><p>分类：</p><ol><li>有参函数和无参函数（从参数看）</li><li>普通构造和拷贝构造（从类型看）</li></ol><p>三种调用方式：</p><ol><li>括号的法。</li><li>显示法。</li><li>隐式转换法。</li></ol><p>规则：</p><p><strong>在编译器中如果写了普通有参构造函数则编译器会自动提供拷贝构造函数而不会提供无参构造函数，如果自己写了拷贝构造函数则编译器不会提供普通构造函数和拷贝构造函数。</strong></p><p>在cpp中一般有三种情况时使用拷贝函数：</p><ol><li>使用一个已经初始化完毕的对象来初始化一个新对象</li><li>值传递方式给函数参数传值</li><li>以值返回局部对象</li></ol><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//拷贝构造函数示例</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Car</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">protected</span>:    </span><br><span class="line">    <span class="type">int</span> number;</span><br><span class="line">    </span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="built_in">Car</span>(<span class="type">const</span> Car &amp;p)<span class="comment">//将传进来的对象的age属性拷贝一份为age赋值</span></span><br><span class="line">    &#123;</span><br><span class="line">        number=p.number</span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"> <span class="comment">//括号法</span></span><br><span class="line">    <span class="function">Car <span class="title">c1</span><span class="params">(<span class="number">10</span>)</span></span>;</span><br><span class="line">    <span class="function">Car <span class="title">c2</span><span class="params">(c1)</span></span>;<span class="comment">//拷贝c1内容进入c2</span></span><br><span class="line"><span class="comment">//显示法</span></span><br><span class="line">    Car c3=c1;<span class="comment">//将c1的参数全部赋值给c3  </span></span><br><span class="line">    <span class="function">Car <span class="title">c4</span><span class="params">(<span class="number">10</span>)</span></span>;<span class="comment">//直接赋值给c4 number 为有参构造</span></span><br><span class="line">    </span><br><span class="line">    Car c5=<span class="built_in">Car</span>(<span class="number">10</span>)<span class="comment">//右侧为匿名对象，可以将数据赋值给左侧</span></span><br><span class="line"> <span class="comment">//隐式法</span></span><br><span class="line">    Car c6=<span class="number">10</span>;<span class="comment">//这里会将值肢解赋给属性中的number</span></span><br><span class="line">&#125;</span><br><span class="line">---------------------------------------------------------</span><br><span class="line">在这里上面的c实际为c的参数，而下面的c实际为一个对象</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">work</span><span class="params">(Car c)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line">    </span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">Car <span class="title">c</span><span class="params">(<span class="number">10</span>)</span></span>;</span><br><span class="line">    <span class="built_in">work</span>(c)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p><strong>在上述代码中有一个Car（10）的对象，为匿名对象，匿名对象在程序执行完后会直接被程序回收，在使用匿名函数时不要使用拷贝函数初始化对象</strong></p><p><strong>浅拷贝和深拷贝</strong>：</p><p>浅拷贝：简单的赋值操作</p><p>深拷贝：在堆区重新申请空间进行拷贝操作</p><p><strong>注意：在程序提供的拷贝函数中会对其直接进行赋值，此种操作为浅拷贝，如果含有指针的数据存在，则需要自己手动写拷贝函数并且在拷贝函数中手动开辟空间并且进行赋值</strong></p><h3 id="析构函数">析构函数</h3><hr><p>格式语法如下：</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~类名()&#123;&#125;</span><br></pre></td></tr></table></figure><p>注意：</p><ol><li>析构函数没有返回值也不需要返回类型</li><li>析构函数与构造函数区别在于前面加上了~</li><li>析构函数不可以有参数所以<strong>不能发生重载</strong></li><li>在程序销毁前自动调用，无需手动操作</li></ol><p>用法：</p><p>析构函数用法很简单，不需要参数，一般是用来释放空间，销毁地址使用。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;hr&gt;
+&lt;h1&gt;构造函数和析构函数&lt;/h1&gt;
+&lt;h2 id=&quot;介绍&quot;&gt;介绍&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;在类中我们经常需要在程序开始时对程序进行初始化，而在程序结束时我们经常需要内存的清理，这将关系到我们程序的安全问题&lt;/p&gt;
+&lt;p&gt;在对象没有进行初始化时我们无法</summary>
+      
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>面向对象（二）</title>
