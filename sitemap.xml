@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://www.fomal.cc/posts/0.html</loc>
+    <loc>https://www.fomal.cc/posts/259fcc70.html</loc>
     
     <lastmod>2024-09-17</lastmod>
     
@@ -11,7 +11,7 @@
   </url>
   
   <url>
-    <loc>https://www.fomal.cc/posts/259fcc70.html</loc>
+    <loc>https://www.fomal.cc/posts/0.html</loc>
     
     <lastmod>2024-09-17</lastmod>
     
@@ -245,24 +245,6 @@
   </url>
   
   <url>
-    <loc>https://www.fomal.cc/box/gallery/index.html</loc>
-    
-    <lastmod>2023-03-22</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.fomal.cc/life/games/index.html</loc>
-    
-    <lastmod>2023-03-22</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://www.fomal.cc/box/animation/index.html</loc>
     
     <lastmod>2023-03-22</lastmod>
@@ -272,7 +254,7 @@
   </url>
   
   <url>
-    <loc>https://www.fomal.cc/life/music/index.html</loc>
+    <loc>https://www.fomal.cc/box/gallery/index.html</loc>
     
     <lastmod>2023-03-22</lastmod>
     
@@ -281,7 +263,7 @@
   </url>
   
   <url>
-    <loc>https://www.fomal.cc/life/movies/index.html</loc>
+    <loc>https://www.fomal.cc/box/nav/index.html</loc>
     
     <lastmod>2023-03-22</lastmod>
     
@@ -290,25 +272,7 @@
   </url>
   
   <url>
-    <loc>https://www.fomal.cc/site/time/index.html</loc>
-    
-    <lastmod>2023-03-22</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.fomal.cc/social/fcircle/index.html</loc>
-    
-    <lastmod>2023-03-22</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.fomal.cc/social/link/index.html</loc>
+    <loc>https://www.fomal.cc/life/games/index.html</loc>
     
     <lastmod>2023-03-22</lastmod>
     
@@ -335,7 +299,43 @@
   </url>
   
   <url>
-    <loc>https://www.fomal.cc/box/nav/index.html</loc>
+    <loc>https://www.fomal.cc/life/movies/index.html</loc>
+    
+    <lastmod>2023-03-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.fomal.cc/site/time/index.html</loc>
+    
+    <lastmod>2023-03-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.fomal.cc/social/link/index.html</loc>
+    
+    <lastmod>2023-03-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.fomal.cc/social/fcircle/index.html</loc>
+    
+    <lastmod>2023-03-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.fomal.cc/life/music/index.html</loc>
     
     <lastmod>2023-03-22</lastmod>
     
@@ -362,14 +362,14 @@
 
   
   <url>
-    <loc>https://www.fomal.cc/tags/c%E5%AD%A6%E4%B9%A0/</loc>
+    <loc>https://www.fomal.cc/tags/c-%E5%AD%A6%E4%B9%A0/</loc>
     <lastmod>2024-09-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://www.fomal.cc/tags/c-%E5%AD%A6%E4%B9%A0/</loc>
+    <loc>https://www.fomal.cc/tags/c%E5%AD%A6%E4%B9%A0/</loc>
     <lastmod>2024-09-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -390,14 +390,14 @@
   </url>
   
   <url>
-    <loc>https://www.fomal.cc/tags/c%E7%AE%97%E6%B3%95/</loc>
+    <loc>https://www.fomal.cc/tags/py%E5%AD%A6%E4%B9%A0/</loc>
     <lastmod>2024-09-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://www.fomal.cc/tags/py%E5%AD%A6%E4%B9%A0/</loc>
+    <loc>https://www.fomal.cc/tags/c%E7%AE%97%E6%B3%95/</loc>
     <lastmod>2024-09-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -406,14 +406,14 @@
 
   
   <url>
-    <loc>https://www.fomal.cc/categories/c%E5%9F%BA%E7%A1%80/</loc>
+    <loc>https://www.fomal.cc/categories/c-%E5%9F%BA%E7%A1%80/</loc>
     <lastmod>2024-09-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://www.fomal.cc/categories/c-%E5%9F%BA%E7%A1%80/</loc>
+    <loc>https://www.fomal.cc/categories/c%E5%9F%BA%E7%A1%80/</loc>
     <lastmod>2024-09-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -427,14 +427,14 @@
   </url>
   
   <url>
-    <loc>https://www.fomal.cc/categories/c%E7%AE%97%E6%B3%95/</loc>
+    <loc>https://www.fomal.cc/categories/py%E5%9F%BA%E7%A1%80/</loc>
     <lastmod>2024-09-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://www.fomal.cc/categories/py%E5%9F%BA%E7%A1%80/</loc>
+    <loc>https://www.fomal.cc/categories/c%E7%AE%97%E6%B3%95/</loc>
     <lastmod>2024-09-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
