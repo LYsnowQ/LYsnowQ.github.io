@@ -3,11 +3,11 @@
   <title>LYsnowQの博客小屋</title>
   
   
-  <link href="https://www.fomal.cc/atom.xml" rel="self"/>
+  <link href="https://www.lysnowq.cn/atom.xml" rel="self"/>
   
-  <link href="https://www.fomal.cc/"/>
-  <updated>2024-09-19T11:13:51.156Z</updated>
-  <id>https://www.fomal.cc/</id>
+  <link href="https://www.lysnowq.cn/"/>
+  <updated>2024-09-19T11:15:11.940Z</updated>
+  <id>https://www.lysnowq.cn/</id>
   
   <author>
     <name>LYsnowQ</name>
@@ -18,10 +18,10 @@
   
   <entry>
     <title>c++的智能指针</title>
-    <link href="https://www.fomal.cc/posts/3f7a8e21.html"/>
-    <id>https://www.fomal.cc/posts/3f7a8e21.html</id>
+    <link href="https://www.lysnowq.cn/posts/3f7a8e21.html"/>
+    <id>https://www.lysnowq.cn/posts/3f7a8e21.html</id>
     <published>2024-09-18T13:29:29.356Z</published>
-    <updated>2024-09-19T11:13:51.156Z</updated>
+    <updated>2024-09-19T11:15:11.940Z</updated>
     
     <content type="html"><![CDATA[<h1 id="智能指针"><a href="#智能指针" class="headerlink" title="智能指针"></a>智能指针</h1><ul><li><p>什么是智能指针：</p><p>智能指针就是可以自己进行指针地址的创建和销毁的指针，在智能指针中，当需要开辟空间时它可以自己new一个空间来调用地址，并且在不需要的时候或者空着的时候自动delete内存空间。在使用智能指针时我们基本不需要使用new，所以智能指针的代码风格也很工整清爽。在编写代码时可以自动化管理内存。</p></li><li><p>智能指针的分类（智能指针包含在memory头文件中）：</p><ul><li>unique_ptr(作用域指针)：<strong>unique_ptr只能有一个</strong>，不能复制一个一样的指针，否则有其中一个释放时，另一个就会指向那个被释放的区域，会报错。<strong>在使用unique_ptr时我们对类的实例化过程时只能显示构造函数，不能进行隐式构造</strong>。</li><li>语法：std::unique_ptr&lt;参数模板&gt; 名字 =std::make_unique&lt;参数模板&gt;()；</li></ul><p>例子如下：</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;memory&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Entity</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">Entity</span>()</span><br><span class="line">    &#123;</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;Creat a Entity!&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    ~<span class="built_in">Entity</span>()</span><br><span class="line">    &#123;</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;Destory a Entity!&quot;</span> &lt;&lt; std::endl; </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">Print</span>()</span><br><span class="line">    &#123;</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;This is an Entity!&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span> <span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function">std::unique_ptr&lt;Entity&gt; <span class="title">entity</span><span class="params">(<span class="keyword">new</span> Entity())</span></span>;<span class="comment">//第一种创建方法</span></span><br><span class="line">std::unique_ptr&lt;Entity&gt; entity = std::<span class="built_in">make_unique</span>&lt;Entity&gt;();<span class="comment">//第二种创建方法（有时可能出于异常时使用此方法，即由于构造函数出现异常时指针会为空）</span></span><br><span class="line">        </span><br><span class="line">        entity-&gt;<span class="built_in">Print</span>();<span class="comment">//像正常函数一样调用即可</span></span><br><span class="line">    &#125;<span class="comment">//当离开这个作用域时这个指针会自动销毁</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure><ul><li>shared_ptr(共享指针):sharing_ptr的使用取决于使用的编译器和其中的标准库，大多数情况下，他是作为引用计数（一种用来统计你的指针有多少引用的方法）在引用计数中一旦计数为0则会自动销毁。例如用了两次sharing_ptr则引用计数为2，如果其中一个被释放了那么为1，直到最后一个也被释放才会自动销毁。</li><li>语法：std::shared_ptr&lt;参数模板&gt; 名字 =std::make_shared&lt;参数模板&gt;()；</li></ul><p>例子如下：</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;memory&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Entity</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">Entity</span>()</span><br><span class="line">    &#123;</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;Creat a Entity!&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    ~<span class="built_in">Entity</span>()</span><br><span class="line">    &#123;</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;Destory a Entity!&quot;</span> &lt;&lt; std::endl; </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">Print</span>()</span><br><span class="line">    &#123;</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;This is an Entity!&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span> <span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    &#123;</span><br><span class="line">        std::shared_ptr&lt;Entity&gt; e0;</span><br><span class="line">        &#123;</span><br><span class="line"><span class="comment">//std::shared_ptr&lt;Entity&gt; entity(new Entity());//第一种创建方法</span></span><br><span class="line">std::shared_ptr&lt;Entity&gt; entity = std::<span class="built_in">make_shared</span>&lt;Entity&gt;();<span class="comment">//第二种创建方法,在这种方法中不写new是因为异常安全</span></span><br><span class="line">        e0 = entity;<span class="comment">//支持复制</span></span><br><span class="line">        &#125;<span class="comment">//在出这个作用域时entity就会销毁，但是e0依旧存活</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure><ul><li>weak_ptr:一般与shared_ptr连用，因为当shared_ptr赋值给weak_ptr时不会增加引用次数，这样可以通过weak_ptr去判断底层对象是否还存在。所有有可能weak_ptr会指向一个无效对象。</li></ul></li></ul><h1 id="资料来源"><a href="#资料来源" class="headerlink" title="资料来源"></a>资料来源</h1><p>  youtube上the cherno的c++系列</p>]]></content>
     
@@ -35,19 +35,19 @@
     
     
     
-    <category term="c++基础" scheme="https://www.fomal.cc/categories/c-%E5%9F%BA%E7%A1%80/"/>
+    <category term="c++基础" scheme="https://www.lysnowq.cn/categories/c-%E5%9F%BA%E7%A1%80/"/>
     
     
-    <category term="c++学习" scheme="https://www.fomal.cc/tags/c-%E5%AD%A6%E4%B9%A0/"/>
+    <category term="c++学习" scheme="https://www.lysnowq.cn/tags/c-%E5%AD%A6%E4%B9%A0/"/>
     
   </entry>
   
   <entry>
     <title>c++操作符重载</title>
-    <link href="https://www.fomal.cc/posts/11f33fa.html"/>
-    <id>https://www.fomal.cc/posts/11f33fa.html</id>
+    <link href="https://www.lysnowq.cn/posts/11f33fa.html"/>
+    <id>https://www.lysnowq.cn/posts/11f33fa.html</id>
     <published>2024-09-18T11:50:53.240Z</published>
-    <updated>2024-09-18T13:02:23.774Z</updated>
+    <updated>2024-09-19T11:15:11.936Z</updated>
     
     <content type="html"><![CDATA[<h1 id="c-的操作符号重载"><a href="#c-的操作符号重载" class="headerlink" title="c++的操作符号重载"></a>c++的操作符号重载</h1><ul><li>什么是操作符：</li></ul><p>操作符的本质就是代替函数执行任务的符号。有运算符号加减乘除等基础数学操作符，还有解引用，取地址符号，<strong>其中new和delete也是操作符的一种</strong>，cpp中有很多操作符，它们的本质就是调用函数或者方法所有的符号代替实现的功能的都叫做操作符，操作符自身也就是一个函数，也包括我们使用的 大括号 小括号 逗号 尖括号（左移操作和右移操作等）。</p><ul><li>重载操作符：</li></ul><p>重载操作符就是重新去定义操作符，扩充它的功能，或者重新给他一个新的含义等操作方法，是一个非常有用的操作方法，在c++中我们拥有对操作符的完全修改的权力。</p><p>重载操作符例子如下：</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span> </span></span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Vector2</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">float</span> x,y;</span><br><span class="line">    <span class="built_in">Vector2</span>(<span class="type">float</span> x, <span class="type">float</span> y)</span><br><span class="line">        :<span class="built_in">x</span>(x),<span class="built_in">y</span>(y)&#123;&#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function">Vector2 <span class="title">Multiply</span><span class="params">(<span class="type">const</span> Vector2&amp; other)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">Vector2</span>(x*other.x,y*other.y);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function">Vector2 <span class="title">Add</span><span class="params">(<span class="type">const</span> Vector2&amp; other)</span> <span class="type">const</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">Vector2</span>(x+other.x,y+other.y);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    Vector2 <span class="keyword">operator</span>+(<span class="type">const</span> Vector2&amp; other) <span class="type">const</span> <span class="comment">//重载了加号</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">Add</span>(other)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    Vector2 <span class="keyword">operator</span>*(<span class="type">const</span> Vector2&amp; other) <span class="type">const</span> <span class="comment">//重载了加号</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">Multiply</span>(other)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//对==的重载</span></span><br><span class="line"><span class="type">bool</span> <span class="keyword">operator</span>==(<span class="type">const</span> Vector2&amp; other) <span class="type">const</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> other.x==x &amp;&amp; other.y==y;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//在==重载基础上重载!=</span></span><br><span class="line">    <span class="type">bool</span> <span class="keyword">operator</span>==(<span class="type">const</span> Vector2&amp; other) <span class="type">const</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> !(*<span class="keyword">this</span>==other);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//重构操作符(因为在类外面所以要定义一个引入类的操作符)</span></span><br><span class="line">std::ostream&amp; <span class="keyword">operator</span>&lt;&lt;(std::ostream&amp; stream,<span class="type">const</span> Vector2&amp; other)</span><br><span class="line">&#123;<span class="comment">//ostream指的是输出流</span></span><br><span class="line">    stream &lt;&lt; other.x &lt;&lt; <span class="string">&quot;,&quot;</span> &lt;&lt; other.y &lt;&lt; std::endl;</span><br><span class="line">    <span class="keyword">return</span> stream;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">Vector2 <span class="title">a_speed</span><span class="params">(<span class="number">10.0f</span>,<span class="number">10.0f</span>)</span></span>;</span><br><span class="line">    <span class="function">Vector2 <span class="title">speed</span><span class="params">(<span class="number">0.5f</span>,<span class="number">0.5f</span>)</span></span>;</span><br><span class="line">    <span class="function">Vector2 <span class="title">powerup</span><span class="params">(<span class="number">1.1f</span>,<span class="number">1.1f</span>)</span></span></span><br><span class="line"><span class="function">    Vector2 final_speed1</span>=a_speed + speed * powerup;</span><br><span class="line">    Vector2 final_speed2=a_speed + speed * powerup + speed;</span><br><span class="line">    <span class="comment">//所以最终速度应该为10*1.1+0.5；</span></span><br><span class="line">    <span class="comment">//通过重构的操作符&lt;&lt;直接输出实例的值</span></span><br><span class="line">    std::cout &lt;&lt; final_speed &lt;&lt; std::endl;</span><br><span class="line">    <span class="keyword">if</span>(final_speed1==final_speed2)</span><br><span class="line">    <span class="keyword">if</span>(final_speed1!=final_speed2)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>重载操作符就是赋予符合额外的功能，在py中更接近于魔术方法，但是仅限于在类中使用，但是在cpp中可以任何地方使用并且有完全的权限去更改它。</p><h1 id="资料参考："><a href="#资料参考：" class="headerlink" title="资料参考："></a>资料参考：</h1><p>youtube上the cherno的cpp系列教学</p>]]></content>
     
@@ -56,17 +56,17 @@
     
     
     
-    <category term="c++基础" scheme="https://www.fomal.cc/categories/c-%E5%9F%BA%E7%A1%80/"/>
+    <category term="c++基础" scheme="https://www.lysnowq.cn/categories/c-%E5%9F%BA%E7%A1%80/"/>
     
     
-    <category term="c++学习" scheme="https://www.fomal.cc/tags/c-%E5%AD%A6%E4%B9%A0/"/>
+    <category term="c++学习" scheme="https://www.lysnowq.cn/tags/c-%E5%AD%A6%E4%B9%A0/"/>
     
   </entry>
   
   <entry>
     <title>c++隐式构造函数，隐式转换和explicit</title>
-    <link href="https://www.fomal.cc/posts/6bd152cd.html"/>
-    <id>https://www.fomal.cc/posts/6bd152cd.html</id>
+    <link href="https://www.lysnowq.cn/posts/6bd152cd.html"/>
+    <id>https://www.lysnowq.cn/posts/6bd152cd.html</id>
     <published>2024-09-18T07:28:03.613Z</published>
     <updated>2024-09-18T11:51:49.688Z</updated>
     
@@ -77,17 +77,17 @@
     
     
     
-    <category term="c++基础" scheme="https://www.fomal.cc/categories/c-%E5%9F%BA%E7%A1%80/"/>
+    <category term="c++基础" scheme="https://www.lysnowq.cn/categories/c-%E5%9F%BA%E7%A1%80/"/>
     
     
-    <category term="c++学习" scheme="https://www.fomal.cc/tags/c-%E5%AD%A6%E4%B9%A0/"/>
+    <category term="c++学习" scheme="https://www.lysnowq.cn/tags/c-%E5%AD%A6%E4%B9%A0/"/>
     
   </entry>
   
   <entry>
     <title>构造函数的初始化成员列表</title>
-    <link href="https://www.fomal.cc/posts/0.html"/>
-    <id>https://www.fomal.cc/posts/0.html</id>
+    <link href="https://www.lysnowq.cn/posts/0.html"/>
+    <id>https://www.lysnowq.cn/posts/0.html</id>
     <published>2024-09-17T09:24:35.796Z</published>
     <updated>2024-09-17T09:58:01.723Z</updated>
     
@@ -98,17 +98,17 @@
     
     
     
-    <category term="c++基础" scheme="https://www.fomal.cc/categories/c-%E5%9F%BA%E7%A1%80/"/>
+    <category term="c++基础" scheme="https://www.lysnowq.cn/categories/c-%E5%9F%BA%E7%A1%80/"/>
     
     
-    <category term="c++学习" scheme="https://www.fomal.cc/tags/c-%E5%AD%A6%E4%B9%A0/"/>
+    <category term="c++学习" scheme="https://www.lysnowq.cn/tags/c-%E5%AD%A6%E4%B9%A0/"/>
     
   </entry>
   
   <entry>
     <title>multable和const</title>
-    <link href="https://www.fomal.cc/posts/259fcc70.html"/>
-    <id>https://www.fomal.cc/posts/259fcc70.html</id>
+    <link href="https://www.lysnowq.cn/posts/259fcc70.html"/>
+    <id>https://www.lysnowq.cn/posts/259fcc70.html</id>
     <published>2024-09-17T07:30:59.389Z</published>
     <updated>2024-09-17T09:58:21.889Z</updated>
     
@@ -119,17 +119,17 @@
     
     
     
-    <category term="c++基础" scheme="https://www.fomal.cc/categories/c-%E5%9F%BA%E7%A1%80/"/>
+    <category term="c++基础" scheme="https://www.lysnowq.cn/categories/c-%E5%9F%BA%E7%A1%80/"/>
     
     
-    <category term="c++学习" scheme="https://www.fomal.cc/tags/c-%E5%AD%A6%E4%B9%A0/"/>
+    <category term="c++学习" scheme="https://www.lysnowq.cn/tags/c-%E5%AD%A6%E4%B9%A0/"/>
     
   </entry>
   
   <entry>
     <title>virtual和override</title>
-    <link href="https://www.fomal.cc/posts/2379f7ax.html"/>
-    <id>https://www.fomal.cc/posts/2379f7ax.html</id>
+    <link href="https://www.lysnowq.cn/posts/2379f7ax.html"/>
+    <id>https://www.lysnowq.cn/posts/2379f7ax.html</id>
     <published>2024-09-16T15:35:27.926Z</published>
     <updated>2024-09-17T05:57:45.437Z</updated>
     
@@ -140,17 +140,17 @@
     
     
     
-    <category term="c++基础" scheme="https://www.fomal.cc/categories/c-%E5%9F%BA%E7%A1%80/"/>
+    <category term="c++基础" scheme="https://www.lysnowq.cn/categories/c-%E5%9F%BA%E7%A1%80/"/>
     
     
-    <category term="c++学习" scheme="https://www.fomal.cc/tags/c-%E5%AD%A6%E4%B9%A0/"/>
+    <category term="c++学习" scheme="https://www.lysnowq.cn/tags/c-%E5%AD%A6%E4%B9%A0/"/>
     
   </entry>
   
   <entry>
     <title>c++中static的应用</title>
-    <link href="https://www.fomal.cc/posts/4abded85.html"/>
-    <id>https://www.fomal.cc/posts/4abded85.html</id>
+    <link href="https://www.lysnowq.cn/posts/4abded85.html"/>
+    <id>https://www.lysnowq.cn/posts/4abded85.html</id>
     <published>2024-09-16T13:07:45.490Z</published>
     <updated>2024-09-18T11:51:40.095Z</updated>
     
@@ -161,17 +161,17 @@
     
     
     
-    <category term="c++基础" scheme="https://www.fomal.cc/categories/c-%E5%9F%BA%E7%A1%80/"/>
+    <category term="c++基础" scheme="https://www.lysnowq.cn/categories/c-%E5%9F%BA%E7%A1%80/"/>
     
     
-    <category term="c++学习" scheme="https://www.fomal.cc/tags/c-%E5%AD%A6%E4%B9%A0/"/>
+    <category term="c++学习" scheme="https://www.lysnowq.cn/tags/c-%E5%AD%A6%E4%B9%A0/"/>
     
   </entry>
   
   <entry>
     <title>c++中的构造函数和析构函数</title>
-    <link href="https://www.fomal.cc/posts/42a67327.html"/>
-    <id>https://www.fomal.cc/posts/42a67327.html</id>
+    <link href="https://www.lysnowq.cn/posts/42a67327.html"/>
+    <id>https://www.lysnowq.cn/posts/42a67327.html</id>
     <published>2024-09-15T07:04:21.535Z</published>
     <updated>2024-09-17T09:10:23.513Z</updated>
     
@@ -182,17 +182,17 @@
     
     
     
-    <category term="c++基础" scheme="https://www.fomal.cc/categories/c-%E5%9F%BA%E7%A1%80/"/>
+    <category term="c++基础" scheme="https://www.lysnowq.cn/categories/c-%E5%9F%BA%E7%A1%80/"/>
     
     
-    <category term="c++学习" scheme="https://www.fomal.cc/tags/c-%E5%AD%A6%E4%B9%A0/"/>
+    <category term="c++学习" scheme="https://www.lysnowq.cn/tags/c-%E5%AD%A6%E4%B9%A0/"/>
     
   </entry>
   
   <entry>
     <title>面向对象（二）</title>
-    <link href="https://www.fomal.cc/posts/b51db9d.html"/>
-    <id>https://www.fomal.cc/posts/b51db9d.html</id>
+    <link href="https://www.lysnowq.cn/posts/b51db9d.html"/>
+    <id>https://www.lysnowq.cn/posts/b51db9d.html</id>
     <published>2023-12-22T07:08:02.252Z</published>
     <updated>2024-09-17T05:42:21.981Z</updated>
     
@@ -203,17 +203,17 @@
     
     
     
-    <category term="py基础" scheme="https://www.fomal.cc/categories/py%E5%9F%BA%E7%A1%80/"/>
+    <category term="py基础" scheme="https://www.lysnowq.cn/categories/py%E5%9F%BA%E7%A1%80/"/>
     
     
-    <category term="py学习" scheme="https://www.fomal.cc/tags/py%E5%AD%A6%E4%B9%A0/"/>
+    <category term="py学习" scheme="https://www.lysnowq.cn/tags/py%E5%AD%A6%E4%B9%A0/"/>
     
   </entry>
   
   <entry>
     <title>面向对象 (一)</title>
-    <link href="https://www.fomal.cc/posts/8dd4ca8d.html"/>
-    <id>https://www.fomal.cc/posts/8dd4ca8d.html</id>
+    <link href="https://www.lysnowq.cn/posts/8dd4ca8d.html"/>
+    <id>https://www.lysnowq.cn/posts/8dd4ca8d.html</id>
     <published>2023-12-14T15:59:44.735Z</published>
     <updated>2024-09-17T05:42:16.091Z</updated>
     
@@ -224,17 +224,17 @@
     
     
     
-    <category term="py基础" scheme="https://www.fomal.cc/categories/py%E5%9F%BA%E7%A1%80/"/>
+    <category term="py基础" scheme="https://www.lysnowq.cn/categories/py%E5%9F%BA%E7%A1%80/"/>
     
     
-    <category term="py学习" scheme="https://www.fomal.cc/tags/py%E5%AD%A6%E4%B9%A0/"/>
+    <category term="py学习" scheme="https://www.lysnowq.cn/tags/py%E5%AD%A6%E4%B9%A0/"/>
     
   </entry>
   
   <entry>
     <title>py的数据容器</title>
-    <link href="https://www.fomal.cc/posts/46006cb5.html"/>
-    <id>https://www.fomal.cc/posts/46006cb5.html</id>
+    <link href="https://www.lysnowq.cn/posts/46006cb5.html"/>
+    <id>https://www.lysnowq.cn/posts/46006cb5.html</id>
     <published>2023-12-07T08:28:41.933Z</published>
     <updated>2024-09-17T05:35:12.660Z</updated>
     
@@ -245,17 +245,17 @@
     
     
     
-    <category term="py基础" scheme="https://www.fomal.cc/categories/py%E5%9F%BA%E7%A1%80/"/>
+    <category term="py基础" scheme="https://www.lysnowq.cn/categories/py%E5%9F%BA%E7%A1%80/"/>
     
     
-    <category term="py学习" scheme="https://www.fomal.cc/tags/py%E5%AD%A6%E4%B9%A0/"/>
+    <category term="py学习" scheme="https://www.lysnowq.cn/tags/py%E5%AD%A6%E4%B9%A0/"/>
     
   </entry>
   
   <entry>
     <title>c++基础学习及与C语言的对比分析</title>
-    <link href="https://www.fomal.cc/posts/fc0b9602.html"/>
-    <id>https://www.fomal.cc/posts/fc0b9602.html</id>
+    <link href="https://www.lysnowq.cn/posts/fc0b9602.html"/>
+    <id>https://www.lysnowq.cn/posts/fc0b9602.html</id>
     <published>2023-11-30T07:31:32.301Z</published>
     <updated>2024-09-17T05:30:04.921Z</updated>
     
@@ -266,17 +266,17 @@
     
     
     
-    <category term="c++基础" scheme="https://www.fomal.cc/categories/c-%E5%9F%BA%E7%A1%80/"/>
+    <category term="c++基础" scheme="https://www.lysnowq.cn/categories/c-%E5%9F%BA%E7%A1%80/"/>
     
     
-    <category term="c++学习" scheme="https://www.fomal.cc/tags/c-%E5%AD%A6%E4%B9%A0/"/>
+    <category term="c++学习" scheme="https://www.lysnowq.cn/tags/c-%E5%AD%A6%E4%B9%A0/"/>
     
   </entry>
   
   <entry>
     <title>文件操作</title>
-    <link href="https://www.fomal.cc/posts/95495db.html"/>
-    <id>https://www.fomal.cc/posts/95495db.html</id>
+    <link href="https://www.lysnowq.cn/posts/95495db.html"/>
+    <id>https://www.lysnowq.cn/posts/95495db.html</id>
     <published>2023-11-24T02:52:00.331Z</published>
     <updated>2024-09-17T05:36:07.399Z</updated>
     
@@ -287,17 +287,17 @@
     
     
     
-    <category term="c基础" scheme="https://www.fomal.cc/categories/c%E5%9F%BA%E7%A1%80/"/>
+    <category term="c基础" scheme="https://www.lysnowq.cn/categories/c%E5%9F%BA%E7%A1%80/"/>
     
     
-    <category term="c学习" scheme="https://www.fomal.cc/tags/c%E5%AD%A6%E4%B9%A0/"/>
+    <category term="c学习" scheme="https://www.lysnowq.cn/tags/c%E5%AD%A6%E4%B9%A0/"/>
     
   </entry>
   
   <entry>
     <title>树</title>
-    <link href="https://www.fomal.cc/posts/7b216a3b.html"/>
-    <id>https://www.fomal.cc/posts/7b216a3b.html</id>
+    <link href="https://www.lysnowq.cn/posts/7b216a3b.html"/>
+    <id>https://www.lysnowq.cn/posts/7b216a3b.html</id>
     <published>2023-11-20T03:56:21.829Z</published>
     <updated>2024-09-17T05:39:37.084Z</updated>
     
@@ -308,17 +308,17 @@
     
     
     
-    <category term="c算法" scheme="https://www.fomal.cc/categories/c%E7%AE%97%E6%B3%95/"/>
+    <category term="c算法" scheme="https://www.lysnowq.cn/categories/c%E7%AE%97%E6%B3%95/"/>
     
     
-    <category term="c算法" scheme="https://www.fomal.cc/tags/c%E7%AE%97%E6%B3%95/"/>
+    <category term="c算法" scheme="https://www.lysnowq.cn/tags/c%E7%AE%97%E6%B3%95/"/>
     
   </entry>
   
   <entry>
     <title>字符串匹配</title>
-    <link href="https://www.fomal.cc/posts/ef3a3fcc.html"/>
-    <id>https://www.fomal.cc/posts/ef3a3fcc.html</id>
+    <link href="https://www.lysnowq.cn/posts/ef3a3fcc.html"/>
+    <id>https://www.lysnowq.cn/posts/ef3a3fcc.html</id>
     <published>2023-11-19T10:45:30.322Z</published>
     <updated>2024-09-17T05:37:40.153Z</updated>
     
@@ -329,17 +329,17 @@
     
     
     
-    <category term="c算法" scheme="https://www.fomal.cc/categories/c%E7%AE%97%E6%B3%95/"/>
+    <category term="c算法" scheme="https://www.lysnowq.cn/categories/c%E7%AE%97%E6%B3%95/"/>
     
     
-    <category term="c算法" scheme="https://www.fomal.cc/tags/c%E7%AE%97%E6%B3%95/"/>
+    <category term="c算法" scheme="https://www.lysnowq.cn/tags/c%E7%AE%97%E6%B3%95/"/>
     
   </entry>
   
   <entry>
     <title>内存</title>
-    <link href="https://www.fomal.cc/posts/593ee330.html"/>
-    <id>https://www.fomal.cc/posts/593ee330.html</id>
+    <link href="https://www.lysnowq.cn/posts/593ee330.html"/>
+    <id>https://www.lysnowq.cn/posts/593ee330.html</id>
     <published>2023-11-17T02:09:44.638Z</published>
     <updated>2024-09-17T05:40:51.523Z</updated>
     
@@ -350,17 +350,17 @@
     
     
     
-    <category term="c基础" scheme="https://www.fomal.cc/categories/c%E5%9F%BA%E7%A1%80/"/>
+    <category term="c基础" scheme="https://www.lysnowq.cn/categories/c%E5%9F%BA%E7%A1%80/"/>
     
     
-    <category term="c学习" scheme="https://www.fomal.cc/tags/c%E5%AD%A6%E4%B9%A0/"/>
+    <category term="c学习" scheme="https://www.lysnowq.cn/tags/c%E5%AD%A6%E4%B9%A0/"/>
     
   </entry>
   
   <entry>
     <title>全局、局部以及静态变量</title>
-    <link href="https://www.fomal.cc/posts/58cc5c90.html"/>
-    <id>https://www.fomal.cc/posts/58cc5c90.html</id>
+    <link href="https://www.lysnowq.cn/posts/58cc5c90.html"/>
+    <id>https://www.lysnowq.cn/posts/58cc5c90.html</id>
     <published>2023-11-16T08:20:39.454Z</published>
     <updated>2024-09-17T05:40:16.787Z</updated>
     
@@ -371,17 +371,17 @@
     
     
     
-    <category term="c基础" scheme="https://www.fomal.cc/categories/c%E5%9F%BA%E7%A1%80/"/>
+    <category term="c基础" scheme="https://www.lysnowq.cn/categories/c%E5%9F%BA%E7%A1%80/"/>
     
     
-    <category term="c学习" scheme="https://www.fomal.cc/tags/c%E5%AD%A6%E4%B9%A0/"/>
+    <category term="c学习" scheme="https://www.lysnowq.cn/tags/c%E5%AD%A6%E4%B9%A0/"/>
     
   </entry>
   
   <entry>
     <title>哈希</title>
-    <link href="https://www.fomal.cc/posts/2e3b1176.html"/>
-    <id>https://www.fomal.cc/posts/2e3b1176.html</id>
+    <link href="https://www.lysnowq.cn/posts/2e3b1176.html"/>
+    <id>https://www.lysnowq.cn/posts/2e3b1176.html</id>
     <published>2023-11-13T14:38:37.507Z</published>
     <updated>2023-11-14T17:49:33.520Z</updated>
     
@@ -404,8 +404,8 @@
   
   <entry>
     <title>跳转语句</title>
-    <link href="https://www.fomal.cc/posts/68c42004.html"/>
-    <id>https://www.fomal.cc/posts/68c42004.html</id>
+    <link href="https://www.lysnowq.cn/posts/68c42004.html"/>
+    <id>https://www.lysnowq.cn/posts/68c42004.html</id>
     <published>2023-11-10T07:55:06.110Z</published>
     <updated>2024-09-17T05:35:49.631Z</updated>
     
@@ -416,17 +416,17 @@
     
     
     
-    <category term="c基础" scheme="https://www.fomal.cc/categories/c%E5%9F%BA%E7%A1%80/"/>
+    <category term="c基础" scheme="https://www.lysnowq.cn/categories/c%E5%9F%BA%E7%A1%80/"/>
     
     
-    <category term="c学习" scheme="https://www.fomal.cc/tags/c%E5%AD%A6%E4%B9%A0/"/>
+    <category term="c学习" scheme="https://www.lysnowq.cn/tags/c%E5%AD%A6%E4%B9%A0/"/>
     
   </entry>
   
   <entry>
     <title>条件判断句和循环语句</title>
-    <link href="https://www.fomal.cc/posts/a5485423.html"/>
-    <id>https://www.fomal.cc/posts/a5485423.html</id>
+    <link href="https://www.lysnowq.cn/posts/a5485423.html"/>
+    <id>https://www.lysnowq.cn/posts/a5485423.html</id>
     <published>2023-11-07T00:02:50.483Z</published>
     <updated>2024-09-17T05:41:43.332Z</updated>
     
@@ -437,10 +437,10 @@
     
     
     
-    <category term="c基础" scheme="https://www.fomal.cc/categories/c%E5%9F%BA%E7%A1%80/"/>
+    <category term="c基础" scheme="https://www.lysnowq.cn/categories/c%E5%9F%BA%E7%A1%80/"/>
     
     
-    <category term="c学习" scheme="https://www.fomal.cc/tags/c%E5%AD%A6%E4%B9%A0/"/>
+    <category term="c学习" scheme="https://www.lysnowq.cn/tags/c%E5%AD%A6%E4%B9%A0/"/>
     
   </entry>
   
