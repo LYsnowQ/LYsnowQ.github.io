@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>LYsnowQの博客小屋</title>
   
-  
+  <subtitle>github主页,有兴趣可以进来逛一逛。</subtitle>
   <link href="https://www.lysnowq.cn/atom.xml" rel="self"/>
   
   <link href="https://www.lysnowq.cn/"/>
