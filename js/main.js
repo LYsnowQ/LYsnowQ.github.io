@@ -147,7 +147,7 @@ document.addEventListener('DOMContentLoaded', function () {
       this.classList.toggle('expand-done')
     }
 
-    function createEle (lang, item, service) {
+    function createEle(lang, item, service) {
       const fragment = document.createDocumentFragment()
 
       if (isShowTool) {
@@ -206,7 +206,7 @@ document.addEventListener('DOMContentLoaded', function () {
   /**
    * PhotoFigcaption
    */
-  function addPhotoFigcaption () {
+  function addPhotoFigcaption() {
     document.querySelectorAll('#article-container img').forEach(function (item) {
       const parentEle = item.parentNode
       const altValue = item.title || item.alt
@@ -266,7 +266,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // find the scroll direction
-    function scrollDirection (currentTop) {
+    function scrollDirection(currentTop) {
       const result = currentTop > initTop // true is down & false is up
       initTop = currentTop
       return result
@@ -456,7 +456,7 @@ document.addEventListener('DOMContentLoaded', function () {
       newEle.className = 'fas fa-sign-out-alt exit-readmode'
       $body.appendChild(newEle)
 
-      function clickFn () {
+      function clickFn() {
         $body.classList.remove('read-mode')
         newEle.remove()
         newEle.removeEventListener('click', clickFn)
@@ -557,10 +557,10 @@ document.addEventListener('DOMContentLoaded', function () {
       let textFont; const copyFont = window.getSelection(0).toString()
       if (copyFont.length > copyright.limitCount) {
         textFont = copyFont + '\n' + '\n' + '\n' +
-        copyright.languages.author + '\n' +
-        copyright.languages.link + window.location.href + '\n' +
-        copyright.languages.source + '\n' +
-        copyright.languages.info
+          copyright.languages.author + '\n' +
+          copyright.languages.link + window.location.href + '\n' +
+          copyright.languages.source + '\n' +
+          copyright.languages.info
       } else {
         textFont = copyFont
       }
@@ -714,11 +714,67 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   const lazyloadImg = () => {
-    window.lazyLoadInstance = new LazyLoad({
-      elements_selector: 'img',
-      threshold: 0,
-      data_src: 'lazy-src'
-    })
+    const initLazy = () => {
+      try {
+        window.lazyLoadInstance = new LazyLoad({
+          elements_selector: 'img',
+          threshold: 0,
+          data_src: 'lazy-src'
+        })
+        console.debug('[lazyload] 已初始化 LazyLoad')
+      } catch (e) {
+        console.debug('[lazyload] 初始化失败，回退直接赋值', e && e.message)
+        document.querySelectorAll('img[data-lazy-src]').forEach(img => {
+          const ds = img.getAttribute('data-lazy-src')
+          if (ds) img.src = ds
+        })
+      }
+    }
+
+    if (window.LazyLoad) {
+      initLazy()
+      return
+    }
+
+    console.debug('[lazyload] LazyLoad 未定义，开始动态加载')
+    const cdnList = [
+      'https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/vanilla-lazyload/17.3.1/lazyload.iife.min.js',
+      'https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.3.1/dist/lazyload.iife.min.js',
+      'https://unpkg.com/vanilla-lazyload@17.3.1/dist/lazyload.iife.min.js'
+    ]
+
+    const loader = typeof window.getScript === 'function'
+      ? window.getScript
+      : (url => new Promise((resolve, reject) => {
+        const s = document.createElement('script')
+        s.src = url
+        s.async = true
+        s.onload = resolve
+        s.onerror = reject
+        document.head.appendChild(s)
+      }))
+
+      ; (async () => {
+        for (let i = 0; i < cdnList.length; i++) {
+          const url = cdnList[i]
+          try {
+            console.debug('[lazyload] 尝试加载脚本源:', url)
+            await loader(url)
+            if (window.LazyLoad) {
+              console.debug('[lazyload] 动态加载成功:', url)
+              initLazy()
+              return
+            }
+          } catch (e) {
+            console.debug('[lazyload] 加载失败，继续下一个源', e && e.message)
+          }
+        }
+        console.debug('[lazyload] 所有脚本源加载失败，回退直接赋值 data-lazy-src')
+        document.querySelectorAll('img[data-lazy-src]').forEach(img => {
+          const ds = img.getAttribute('data-lazy-src')
+          if (ds) img.src = ds
+        })
+      })()
   }
 
   const relativeDate = function (selector) {
@@ -776,4 +832,21 @@ document.addEventListener('DOMContentLoaded', function () {
 
   refreshFn()
   unRefreshFn()
+
+  // pjax 完成后更新或初始化懒加载
+  window.addEventListener('pjax:complete', () => {
+    if (!GLOBAL_CONFIG.islazyload) return
+    if (window.lazyLoadInstance && typeof window.lazyLoadInstance.update === 'function') {
+      try {
+        window.lazyLoadInstance.update()
+        console.debug('[lazyload] pjax:complete 已更新图片')
+      } catch (e) {
+        console.debug('[lazyload] pjax 更新失败，尝试重新初始化', e && e.message)
+        lazyloadImg()
+      }
+    } else {
+      console.debug('[lazyload] pjax:complete 未发现实例，尝试初始化')
+      lazyloadImg()
+    }
+  })
 })
